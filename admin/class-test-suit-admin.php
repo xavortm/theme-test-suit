@@ -61,7 +61,7 @@ class Test_Suit_Admin {
 	 *
 	 * Include the following files that make up the settings page:
 	 *
-	 * - Test_Suit_Settings. Setup and handle all settings.
+	 * - Test_Suit_Checklist. Setup and handle all settings.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -71,7 +71,7 @@ class Test_Suit_Admin {
 	 */
 	private function load_dependencies() {
 
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/test-suit-admin-settings.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/test-suit-admin-checklist.php';
 	
 	}
 
@@ -130,8 +130,8 @@ class Test_Suit_Admin {
 	public function register_settings_page() {
 		
 		add_menu_page(
-			'Theme Test Suit',
-			'Theme Test Suit',
+			'Theme Test',
+			'Theme Test',
 			'administrator',
 			 __FILE__,
 			array( $this, 'render_settings_page' )

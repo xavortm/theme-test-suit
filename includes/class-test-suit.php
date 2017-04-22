@@ -158,9 +158,9 @@ class Test_Suit {
 		/**
 		 * The custom settings for the plugin
 		 * 
-		 * @var Test_Suit_Settings
+		 * @var Test_Suit_Checklist
 		 */
-		$plugin_settings = new Test_Suit_Settings( $this->get_plugin_name(), $this->get_version() );
+		$plugin_settings = new Test_Suit_Checklist( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_init', $plugin_settings, 'register_settings' );
 		$this->loader->add_action( 'whitelist_options', $plugin_settings, 'whitelist_custom_options_page', 11 );
