@@ -51,7 +51,28 @@ class Test_Suit_Admin {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
+		
+		$this->load_dependencies();
 
+	}
+
+	/**
+	 * Load the required dependencies for the settings page
+	 *
+	 * Include the following files that make up the settings page:
+	 *
+	 * - Test_Suit_Settings. Setup and handle all settings.
+	 *
+	 * Create an instance of the loader which will be used to register the hooks
+	 * with WordPress.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function load_dependencies() {
+
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/test-suit-admin-settings.php';
+	
 	}
 
 	/**
@@ -97,6 +118,51 @@ class Test_Suit_Admin {
 		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/test-suit-admin.js', array( 'jquery' ), $this->version, false );
+
+	}
+
+	/**
+	 * Simply register the new settings page. Rendering is triggered from the
+	 * render_settings_page() function below.
+	 * 
+	 * @since    1.0.0
+	 */
+	public function register_settings_page() {
+		
+		add_menu_page(
+			'Theme Test Suit',
+			'Theme Test Suit',
+			'administrator',
+			 __FILE__,
+			array( $this, 'render_settings_page' )
+		);
+
+	}
+
+	/**
+	 * Handles the rendering of the custom settings page rhg
+	 * 
+	 * @since    1.0.0
+	 */
+	public function render_settings_page() {
+		
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		/**
+		 * Check if the user have submitted the settings
+		 * WordPress will add the "settings-updated" $_GET parameter to the url
+		 */ 
+		if ( isset( $_GET['settings-updated'] ) ) {
+			 add_settings_error( 'testsuit_messages', 'testsuit_message', __( 'Settings Saved', 'test-suit' ), 'updated' );
+		}
+
+		// Show any error/update messages
+		settings_errors( 'testsuit_message' );
+
+		// Handle all of the html markup in this separate file
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/test-suit-admin-display.php';
 
 	}
 

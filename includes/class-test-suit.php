@@ -153,6 +153,17 @@ class Test_Suit {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'register_settings_page' );
+
+		/**
+		 * The custom settings for the plugin
+		 * 
+		 * @var Test_Suit_Settings
+		 */
+		$plugin_settings = new Test_Suit_Settings( $this->get_plugin_name(), $this->get_version() );
+
+		$this->loader->add_action( 'admin_init', $plugin_settings, 'register_settings' );
+		$this->loader->add_action( 'whitelist_options', $plugin_settings, 'whitelist_custom_options_page', 11 );
 
 	}
 

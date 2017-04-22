@@ -15,7 +15,7 @@
  * @wordpress-plugin
  * Plugin Name:       Theme Test Suit
  * Plugin URI:        https://github.com/xavortm/theme-test-suit
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
+ * Description:       A plugin that will help out when working on your new WordPress theme.
  * Version:           1.0.0
  * Author:            Alex DImitrov
  * Author URI:        xavortm.com
