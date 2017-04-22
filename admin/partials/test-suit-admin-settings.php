@@ -74,7 +74,8 @@ class Test_Suit_Settings {
 
 	/**
 	 * Wrapper for wp's `add_settings_section()` that tracks custom sections
-	 * 
+	 *
+	 * @access   private
 	 * @since    1.0.0
 	 */
 	private function add_settings_section( $id, $title, $cb, $page ){
@@ -123,7 +124,34 @@ class Test_Suit_Settings {
 			)
 		);
 
+	}
 
+	/**
+	 * Build checkbox helper function. 
+	 *
+	 * Since it looks messy and does some checks, it is best to have it as a helper 
+	 * private function and simply pass the arguments to create the checkbox. 
+	 * Plus separating into smaller blocks is always a plus
+	 * 
+	 * @access   private
+	 * @since    1.0.0
+	 */
+	private function create_checkbox( $id, $setting, $description ) {
+		
+		$options = get_option( $setting );
+		$checkbox_value = 0; // Default value
+		
+		if ( isset( $options[$id] ) ) {
+			$checkbox_value = checked( 1, $options[$id], false );
+		}
+
+		$html = '<input type="checkbox" id="'. $id .'" name="'. $setting .'['. $id .']" value="1" ' . $checkbox_value . ' />';
+
+		if ( ! empty( $description ) ) {
+			$html .= __( $description, 'test-suit' );
+		}
+
+		echo $html;
 	}
 
 	/**
@@ -136,14 +164,7 @@ class Test_Suit_Settings {
 	}
 
 	public function test_checklist_screenshot_cb( $arg ) {
-
-		$options = get_option( 'test_suit_checkboxes' );
-
-		$html = '<input type="checkbox" id="test_checklist_screenshot" name="test_suit_checkboxes[test_checklist_screenshot]" value="1" ' . checked( 1, $options['test_checklist_screenshot'], false ) . ' />';
-
-		$html .= __( 'The screenshot must represent realistic view of the theme with no external stylings.', 'test-suit');
-
-		echo $html;
+		$this->create_checkbox( 'test_checklist_screenshot', 'test_suit_checkboxes', 'The screenshot must represent realistic view of the theme with no external stylings.' );
 	}
 
 	public function test_suit_checkboxes_validate( $input ) {
